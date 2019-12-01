@@ -1839,13 +1839,16 @@ generate_jsimd_ycc_rgb_convert_neon extbgr,  24, 2, .4h,  1, .4h,  0, .4h,  .8b,
     st1             {v21.8b}, [U], #8
     st1             {v22.8b}, [V], #8
   .elseif \size == 4
-    st1		    {v20.s}[0], [Y], #4
-    st1		    {v21.s}[0], [U], #4    
+    st1             {v20.s}[0], [Y], #4
+    st1             {v21.s}[0], [U], #4
     st1             {v22.s}[0], [V], #4
   .elseif \size == 2  
-    st1             {v20.h}[4], [Y], #2
-    st1             {v21.h}[4], [U], #2
-    st1             {v22.h}[4], [V], #2
+    st1             {v20.b}[4], [Y], #1
+    st1             {v20.b}[5], [Y], #1
+    st1             {v21.b}[4], [U], #1
+    st1             {v21.b}[5], [U], #1
+    st1             {v22.b}[4], [V], #1
+    st1             {v22.b}[5], [V], #1
   .elseif \size == 1
     st1             {v20.b}[6], [Y], #1
     st1             {v21.b}[6], [U], #1
