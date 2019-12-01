@@ -1840,8 +1840,8 @@ generate_jsimd_ycc_rgb_convert_neon extbgr,  24, 2, .4h,  1, .4h,  0, .4h,  .8b,
     st1             {v22.8b}, [V], #8
   .elseif \size == 4
     st1		    {v20.s}[0], [Y], #4
-    st1		    {v21.s}[0], [Y], #4    
-    st1             {v22.s}[0], [Y], #4
+    st1		    {v21.s}[0], [U], #4    
+    st1             {v22.s}[0], [V], #4
   .elseif \size == 2  
     st1             {v20.h}[4], [Y], #2
     st1             {v21.h}[4], [U], #2
@@ -1861,37 +1861,16 @@ generate_jsimd_ycc_rgb_convert_neon extbgr,  24, 2, .4h,  1, .4h,  0, .4h,  .8b,
       .if \fast_ld3 == 1
         ld3         {v10.8b, v11.8b, v12.8b}, [RGB], #24
       .else
-        ld1         {v10.b}[0], [RGB], #1
-        ld1         {v11.b}[0], [RGB], #1
-        ld1         {v12.b}[0], [RGB], #1
+        
+	ld3	    {v10.b,v11.b,v12.b}[0], [RGB], #3	
+	ld3	    {v10.b,v11.b,v12.b}[1], [RGB], #3
+	ld3	    {v10.b,v11.b,v12.b}[2], [RGB], #3
+	ld3	    {v10.b,v11.b,v12.b}[3], [RGB], #3	
+	ld3	    {v10.b,v11.b,v12.b}[4], [RGB], #3	
+	ld3	    {v10.b,v11.b,v12.b}[5], [RGB], #3	
+	ld3	    {v10.b,v11.b,v12.b}[6], [RGB], #3	
+	ld3	    {v10.b,v11.b,v12.b}[7], [RGB], #3 	
 
-        ld1         {v10.b}[1], [RGB], #1
-        ld1         {v11.b}[1], [RGB], #1
-        ld1         {v12.b}[1], [RGB], #1
-
-        ld1         {v10.b}[2], [RGB], #1
-        ld1         {v11.b}[2], [RGB], #1
-        ld1         {v12.b}[2], [RGB], #1
-
-        ld1         {v10.b}[3], [RGB], #1
-        ld1         {v11.b}[3], [RGB], #1
-        ld1         {v12.b}[3], [RGB], #1
-
-        ld1         {v10.b}[4], [RGB], #1
-        ld1         {v11.b}[4], [RGB], #1
-        ld1         {v12.b}[4], [RGB], #1
-
-        ld1         {v10.b}[5], [RGB], #1
-        ld1         {v11.b}[5], [RGB], #1
-        ld1         {v12.b}[5], [RGB], #1
-
-        ld1         {v10.b}[6], [RGB], #1
-        ld1         {v11.b}[6], [RGB], #1
-        ld1         {v12.b}[6], [RGB], #1
-
-        ld1         {v10.b}[7], [RGB], #1
-        ld1         {v11.b}[7], [RGB], #1
-        ld1         {v12.b}[7], [RGB], #1
       .endif
       prfm          pldl1keep, [RGB, #128]
     .elseif \size == 4
